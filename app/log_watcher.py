@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import time
+from app.llm_analyzer import analyze_log
 
 # Resolve target log file path.
 LOG_FILE_PATH = os.path.join("logs", "app.log")
@@ -34,7 +35,12 @@ def watch_logs():
                         f"\n[ALERT]: Critical ERROR detected!\nMessage:"
                         f"{log_data.get('message')}\nDetails:"
                         f"{log_data.get('error_details')}\n"
+                        f"SRE AGENT ANALYZING..."\n"
                         )
+                    ai_analysis = analyze_log(log_data)
+                    print("----------------------------------------")
+                    print(ai_analysis)
+                    print("----------------------------------------\n")
             except json.JSONDecodeError:
                 continue
 if __name__ == "__main__":
