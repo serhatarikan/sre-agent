@@ -22,11 +22,19 @@ def analyze_log(log_data: dict) -> str:
     Provide Root Cause and Remediation Steps concise.
     """
     # Prepare payload for Ollama REST API
-    payload = {"model": MODEL_NAME, "prompt": prompt, "stream": False}
+    payload = {
+        "model": MODEL_NAME, 
+        "prompt": prompt, 
+        "stream": False,
+        #performance tweak for local LLM
+        "options": {
+        "num_predict": 120 
+        },
+        }
 
     try:
-        # Dispatch POST request with 30s timeout
-        response = requests.post(OLLAMA_URL, json = payload, timeout=30)
+        # Dispatch POST request with 120s timeout
+        response = requests.post(OLLAMA_URL, json = payload, timeout=120)
         response.raise_for_status()
 
         # Extract LLM output

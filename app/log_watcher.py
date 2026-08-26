@@ -38,10 +38,14 @@ def watch_logs():
                         f"{log_data.get('error_details')}\n"
                         f"SRE AGENT ANALYZING...\n"
                         )
+                    # Trigger the AI agent.
                     ai_analysis = analyze_log(log_data)
                     print("----------------------------------------")
                     print(ai_analysis)
                     print("----------------------------------------\n")
+
+                    #Performance tweak for local LLm
+                    time.sleep(1)
             except json.JSONDecodeError:
                 continue
 if __name__ == "__main__":
